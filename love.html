@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Great+Vibes&display=swap"
+        rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Card</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:wght@300;400;500&display=swap');
+
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            /*background: linear-gradient(135deg, #ff9a9e, #fecfef);*/
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .card {
+            position: relative;
+            width: 350px;
+            height: 450px;
+            perspective: 1000px;
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transform: rotateY(0deg);
+            transition: transform 1s;
+        }
+
+        .card.open .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front,
+        .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-front {
+            background: url('https://via.placeholder.com/350x450') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Pacifico', cursive;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .card-back {
+            background: white;
+            transform: rotateY(180deg);
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .card-back h1 {
+            font-family: 'Pacifico', cursive;
+            font-size: 2rem;
+            color: #ff6f91;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .card-back p {
+            font-size: 1rem;
+            color: #333;
+            text-align: center;
+        }
+
+        .falling-hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .falling-hearts .heart {
+            position: absolute;
+            width: 20px;
+            height: 18px;
+            background: pink;
+            transform: rotate(-45deg);
+            animation: fall 7s infinite;
+        }
+
+        .falling-hearts .heart::before,
+        .falling-hearts .heart::after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: pink;
+            border-radius: 50%;
+        }
+
+        .falling-hearts .heart::before {
+            top: -10px;
+            left: 0;
+        }
+
+        .falling-hearts .heart::after {
+            top: 0;
+            left: 10px;
+        }
+
+        .arrow {
+            position: absolute;
+            top: 50%;
+            right: -350px;
+            /* Khoảng cách từ cạnh phải thiệp */
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: bounce 1.5s infinite;
+        }
+
+        .arrow-text {
+            font-family: 'Pacifico', cursive;
+            font-size: 1.2rem;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+
+        .arrow-icon {
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 15px solid #fff;
+            transform: rotate(90deg);
+            /* Xoay 90 độ */
+        }
+
+
+        @keyframes fall {
+            from {
+                transform: translateY(-100%) rotate(-45deg);
+                opacity: 1;
+            }
+
+            to {
+                transform: translateY(100vh) rotate(45deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translate(-50%, 0);
+            }
+
+            50% {
+                transform: translate(-50%, -10px);
+            }
+        }
+
+        .card.open .arrow {
+            display: none;
+        }
+
+        .love-message {
+            font-family: 'Dancing Script', cursive;
+            /* Phông chữ đẹp, viết tay */
+            color: #F28AB2;
+            /* Màu hồng nhẹ nhàng */
+            background: rgba(255, 223, 237, 0.8);
+            /* Nền màu hồng nhạt, trong suốt */
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px auto;
+            width: 80%;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            line-height: 1.5;
+            font-size: 1.2rem;
+        }
+
+        .love-message p {
+            margin-bottom: 15px;
+        }
+
+        .love-message .signature {
+            font-family: 'Great Vibes', cursive;
+            /* Phông chữ đặc biệt cho chữ ký */
+            font-size: 1.5rem;
+            color: #E75480;
+            /* Màu đậm hơn một chút */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="falling-hearts"></div>
+
+    <div class="card" onclick="toggleCard(this)">
+        <div class="arrow">
+            <div class="arrow-text">Công chúa ấn zô đây nè</div>
+            <div class="arrow-icon"></div>
+        </div>
+        <div class="card-inner">
+            <div class="card-front" style="background: url('Jang chụp tui.jpg') center/cover no-repeat;">
+                <!-- Image is now the front face -->
+            </div>
+            <div class="card-back">
+                <h1>To My Beloved</h1>
+                <div class="love-message">
+                    <p>
+                        "Công chúa Jang ơiiiiiii, Giáng xinh zui zẻ nè. Cạm ưn c đã đến với tớ trong năm 2024 này nha,
+                        Giáng xinh năm nay cóa c tớ cạm thấy đặc bịt nhìu lém. Chúc c luôn vui cừi, hạnh phúc như này
+                        nhaaaaaaa."
+                    </p>
+                    <p>
+                        Tớ mong tình cảm chúng mình ngày càng toa lớn nhá, tớ sẽ cố gắng ạaaaaaa!
+                    </p>
+                    <p>
+                        Ngừi iu cụa c - <span class="signature">phamchivyz</span>
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 2 + 5 + 's';
+            document.querySelector('.falling-hearts').appendChild(heart);
+            setTimeout(() => heart.remove(), 7000);
+        }
+
+        setInterval(createHeart, 300);
+
+        function toggleCard(card) {
+            card.classList.toggle('open');
+        }
+    </script>
+    <h1 class="tree-title">Merry Christmas</h1>
+    <canvas id="canvas" width="100vw" height="100vh"></canvas>
+    <svg version="1.1" id="tree" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+        y="0px" viewBox="0 0 125.8 180" style="enable-background:new 0 0 125.8 180;" xml:space="preserve">
+        <style type="text/css">
+            .st0 {
+                fill: #332C28;
+            }
+
+            .st1 {
+                fill: #00513E;
+            }
+
+            .st2 {
+                fill: #003828;
+            }
+
+            .st3 {
+                fill: #E7B75C;
+            }
+
+            .st4 {
+                fill: #B28947;
+            }
+        </style>
+        <g>
+            <g>
+                <rect x="55.9" y="135" class="st0" width="13.7" height="45" />
+                <polygon class="st1" points="24,84.3 37.5,81.3 14.9,121.7 28.8,118.6 0,170.3 62.6,156.1 62.6,15.3 		" />
+                <polygon class="st2" points="125.8,170.3 96.9,118.6 110.9,121.7 88.2,81.3 101.7,84.3 62.8,14.9 62.6,15.3 62.6,156.1 62.8,156 
+                        " />
+            </g>
+            <g id="lights">
+                <g id="blue-lt">
+                    <circle class="blue-lt g1" cx="70.2" cy="134.7" r="3.7" />
+                    <circle class="blue-lt g3" cx="23.1" cy="147.5" r="4.2" />
+                    <circle class="blue-lt g1" cx="59.3" cy="116.9" r="5.8" />
+                </g>
+                <g id="blue-dk">
+                    <circle class="blue-dk g3" cx="77.1" cy="55.3" r="4.8" />
+                    <circle class="blue-dk g1" cx="98.6" cy="148.6" r="4.5" />
+                    <circle class="blue-dk g2" cx="62.7" cy="80.2" r="4.4" />
+                </g>
+                <g id="red">
+                    <circle class="red g1" cx="37" cy="125.3" r="5.9" />
+                    <circle class="red g1" cx="78.2" cy="95.2" r="5.7" />
+                    <circle class="red g2" cx="54.8" cy="144.2" r="3.4" />
+                    <circle class="red g2" cx="59.8" cy="44.2" r="5.2" />
+                </g>
+                <g id="gold-lt">
+                    <circle class="gold-lt g1" cx="51.7" cy="64.8" r="5.7" />
+                    <circle class="gold-lt g2" cx="39.5" cy="140.4" r="4.4" />
+                </g>
+                <g id="gold-dk">
+                    <circle class="gold-dk g2" cx="76.9" cy="76.7" r="4.4" />
+                    <circle class="gold-dk g3" cx="83.9" cy="125.3" r="4.8" />
+                    <circle class="gold-dk g3" cx="46" cy="99.6" r="4.0" />
+                </g>
+            </g>
+            <polygon class="st3" points="59.1,10.5 48,10.5 57.1,17.1 53.6,27.6 62.6,21.1 62.6,0 	" />
+            <polygon class="st4" points="77.1,10.5 66,10.5 62.6,0 62.6,21.1 71.6,27.6 68.2,17.1 	" />
+        </g>
+    </svg>
+</body>
+
+</html>
