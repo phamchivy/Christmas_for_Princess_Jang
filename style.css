@@ -7,6 +7,38 @@ body{
     background-size: 100% 100%;
     overflow: hidden;
 }
+@media (max-width: 768px) {
+    body {
+        /* Cân chỉnh lại kích thước nền cho điện thoại */
+        background-size: 150% 150%; /* Làm cho nền lớn hơn trên các màn hình nhỏ */
+        overflow: auto; /* Cho phép cuộn trang nếu nội dung dài */
+    }
+    #tree-title {
+        position: absolute;
+        top: 5%; /* Đẩy cây thông xuống giữa màn hình */
+        left: 55%;
+        transform: translate(-50%, 0); /* Căn giữa */
+    }
+    .arrow {
+        position: relative;
+        top: 0; /* Đặt ở góc trên cùng của màn hình */
+        left: 50%; /* Đặt ở giữa màn hình */
+        right: auto; /* Loại bỏ giá trị right */
+        transform: translate(-50%, 0); /* Căn giữa theo chiều ngang */
+    }
+
+    .arrow-text {
+        font-size: 1rem; /* Giảm kích thước chữ nếu cần */
+    }
+
+    .arrow-icon {
+        border-top: 10px solid #fff; /* Thu nhỏ mũi tên nếu cần */
+        transform: rotate(0deg);
+    }
+    #tree-block{
+        display:none;
+    }
+}
 #tree{
     z-index: -1; /* Đưa cây thông xuống dưới */
     width: 100vw;
